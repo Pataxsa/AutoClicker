@@ -1,2 +1,2 @@
 # AutoClicker
-[Img1](https://raw.githubusercontent.com/Pataxsa/AutoClicker/main/Img.PNG)
+[<p align="center"><img src="https://raw.githubusercontent.com/Pataxsa/AutoClicker/main/Img.PNG" alt="travis">]
