@@ -22,6 +22,8 @@ namespace AutoClicker
 
         private const int LEFTUP = 0x0004;
         private const int LEFTDOWN = 0x0002;
+        private const int RIGHTUP = 0x10;
+        private const int RIGHTDOWN = 0x08;
         public int intervals = 1000;
         public bool Clicks = false;
         public int MouseClicks = 0;
@@ -33,7 +35,6 @@ namespace AutoClicker
         public AutoClicker()
         {
             InitializeComponent();
-            this.AutoScroll = true;
         }
         private void AutoClicker_Load(object sender, EventArgs e)
         {
@@ -57,11 +58,21 @@ namespace AutoClicker
             {
                 if (Clicks == true)
                 {
-                    mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                    Thread.Sleep(1);
-                    mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                    MouseClicks += 1;
-                    Thread.Sleep(intervals);
+                    if (ButtonSelect.Text == "Left")
+                    {
+                        mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                        Thread.Sleep(1);
+                        mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                        MouseClicks += 1;
+                        Thread.Sleep(intervals);
+                    }else if (ButtonSelect.Text == "Right")
+                    {
+                        mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                        Thread.Sleep(1);
+                        mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                        MouseClicks += 1;
+                        Thread.Sleep(intervals);
+                    }
                 }
                 Thread.Sleep(2);
             }
@@ -77,11 +88,22 @@ namespace AutoClicker
 
                     foreach (String str in strings)
                     {
-                        mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                        Thread.Sleep(1);
-                        mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                        MouseClicks += 1;
-                        Thread.Sleep(intervals);
+                        if (ButtonSelect.Text == "Left")
+                        {
+                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            MouseClicks += 1;
+                            Thread.Sleep(intervals);
+                        }
+                        else if (ButtonSelect.Text == "Right")
+                        {
+                            mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            Thread.Sleep(1);
+                            mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                            MouseClicks += 1;
+                            Thread.Sleep(intervals);
+                        }
                     }
                     Start.Enabled = true;
                     Start.BackColor = Color.LawnGreen;
@@ -161,68 +183,85 @@ namespace AutoClicker
                     {
                         if (int.Parse(IntervalsBox.Text) > 0)
                         {
-                            if (InfinityButton.Checked)
+                            if (ButtonSelect.Text != "Left" && ButtonSelect.Text != "Right")
                             {
-                                intervals = int.Parse(IntervalsBox.Text);
-                                Clicks = true;
-                                Stop.Enabled = true;
-                                Stop.BackColor = Color.Red;
-                                Start.Enabled = false;
-                                Start.BackColor = Color.DarkGreen;
-                                this.Text = "AutoClicker - On";
-                                RepeatButton.Enabled = false;
-                                InfinityButton.Enabled = false;
-                                RepeatNumber.Enabled = false;
-                                ButtonSelect.Enabled = false;
-                                IntervalsBox.Enabled = false;
+                                MessageBox.Show("Please select a valide type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
-                            else if (RepeatButton.Checked)
+                            else
                             {
-                                if (!int.TryParse(RepeatNumber.Text, out parsedValue))
+                                if (InfinityButton.Checked)
                                 {
-                                    MessageBox.Show("Please enter a valid repeat number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    intervals = int.Parse(IntervalsBox.Text);
+                                    Clicks = true;
+                                    Stop.Enabled = true;
+                                    Stop.BackColor = Color.Red;
+                                    Start.Enabled = false;
+                                    Start.BackColor = Color.DarkGreen;
+                                    this.Text = "AutoClicker - On";
+                                    RepeatButton.Enabled = false;
+                                    InfinityButton.Enabled = false;
+                                    RepeatNumber.Enabled = false;
+                                    ButtonSelect.Enabled = false;
+                                    IntervalsBox.Enabled = false;
                                 }
-                                else
+                                else if (RepeatButton.Checked)
                                 {
-                                    if (int.Parse(RepeatNumber.Text) > 0)
+                                    if (!int.TryParse(RepeatNumber.Text, out parsedValue))
                                     {
-                                        intervals = int.Parse(IntervalsBox.Text);
-                                        Stop.Enabled = false;
-                                        Stop.BackColor = Color.DarkRed;
-                                        Start.Enabled = false;
-                                        Start.BackColor = Color.DarkGreen;
-                                        this.Text = "AutoClicker - On";
-                                        RepeatButton.Enabled = false;
-                                        InfinityButton.Enabled = false;
-                                        RepeatNumber.Enabled = false;
-                                        ButtonSelect.Enabled = false;
-                                        IntervalsBox.Enabled = false;
-                                        IEnumerable<string> strings = Enumerable.Repeat("I like programming.", int.Parse(RepeatNumber.Text) + 1);
-
-                                        foreach (String str in strings)
-                                        {
-                                            mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                                            Thread.Sleep(1);
-                                            mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
-                                            MouseClicks += 1;
-                                            Thread.Sleep(intervals);
-                                        }
-                                        Start.Enabled = true;
-                                        Start.BackColor = Color.LawnGreen;
-                                        Stop.Enabled = false;
-                                        Stop.BackColor = Color.DarkRed;
-                                        this.Text = "AutoClicker - Off";
-                                        RepeatButton.Enabled = true;
-                                        InfinityButton.Enabled = true;
-                                        RepeatNumber.Enabled = true;
-                                        ButtonSelect.Enabled = true;
-                                        IntervalsBox.Enabled = true;
-                                        MouseClicks = 0;
-
+                                        MessageBox.Show("Please enter a valid repeat number.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     }
                                     else
                                     {
-                                        MessageBox.Show("Please enter a repeat number > 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        if (int.Parse(RepeatNumber.Text) > 0)
+                                        {
+                                            intervals = int.Parse(IntervalsBox.Text);
+                                            Stop.Enabled = false;
+                                            Stop.BackColor = Color.DarkRed;
+                                            Start.Enabled = false;
+                                            Start.BackColor = Color.DarkGreen;
+                                            this.Text = "AutoClicker - On";
+                                            RepeatButton.Enabled = false;
+                                            InfinityButton.Enabled = false;
+                                            RepeatNumber.Enabled = false;
+                                            ButtonSelect.Enabled = false;
+                                            IntervalsBox.Enabled = false;
+                                            IEnumerable<string> strings = Enumerable.Repeat("I like programming.", int.Parse(RepeatNumber.Text) + 1);
+
+                                            foreach (String str in strings)
+                                            {
+                                                if (ButtonSelect.Text == "Left")
+                                                {
+                                                    mouse_event(dwFlags: LEFTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                                                    Thread.Sleep(1);
+                                                    mouse_event(dwFlags: LEFTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                                                    MouseClicks += 1;
+                                                    Thread.Sleep(intervals);
+                                                }else if (ButtonSelect.Text == "Right")
+                                                {
+                                                    mouse_event(dwFlags: RIGHTUP, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                                                    Thread.Sleep(1);
+                                                    mouse_event(dwFlags: RIGHTDOWN, dx: 0, dy: 0, cButtons: 0, dwExtraInfo: 0);
+                                                    MouseClicks += 1;
+                                                    Thread.Sleep(intervals);
+                                                }
+                                            }
+                                            Start.Enabled = true;
+                                            Start.BackColor = Color.LawnGreen;
+                                            Stop.Enabled = false;
+                                            Stop.BackColor = Color.DarkRed;
+                                            this.Text = "AutoClicker - Off";
+                                            RepeatButton.Enabled = true;
+                                            InfinityButton.Enabled = true;
+                                            RepeatNumber.Enabled = true;
+                                            ButtonSelect.Enabled = true;
+                                            IntervalsBox.Enabled = true;
+                                            MouseClicks = 0;
+
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Please enter a repeat number > 0", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        }
                                     }
                                 }
                             }
@@ -248,6 +287,11 @@ namespace AutoClicker
             {
                 if(int.Parse(IntervalsBox.Text) > 0)
                 {
+                    if(ButtonSelect.Text != "Left" && ButtonSelect.Text != "Right")
+                    {
+                        MessageBox.Show("Please select a valide type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     if (InfinityButton.Checked)
                     {
                         intervals = int.Parse(IntervalsBox.Text);

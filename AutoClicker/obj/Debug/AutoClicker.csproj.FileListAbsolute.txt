@@ -1,7 +1,6 @@
 C:\Users\patcv\Downloads\C#\AutoClicker\AutoClicker\bin\Debug\AutoClicker.exe.config
 C:\Users\patcv\Downloads\C#\AutoClicker\AutoClicker\bin\Debug\AutoClicker.exe
 C:\Users\patcv\Downloads\C#\AutoClicker\AutoClicker\bin\Debug\AutoClicker.pdb
-C:\Users\patcv\Downloads\C#\AutoClicker\AutoClicker\obj\Debug\AutoClicker.csproj.AssemblyReference.cache
 C:\Users\patcv\Downloads\C#\AutoClicker\AutoClicker\obj\Debug\AutoClicker.AutoClicker.resources
 C:\Users\patcv\Downloads\C#\AutoClicker\AutoClicker\obj\Debug\AutoClicker.Properties.Resources.resources
 C:\Users\patcv\Downloads\C#\AutoClicker\AutoClicker\obj\Debug\AutoClicker.csproj.GenerateResource.cache

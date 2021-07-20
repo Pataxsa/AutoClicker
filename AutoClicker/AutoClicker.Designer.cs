@@ -142,7 +142,6 @@ namespace AutoClicker
             this.ButtonSelect.FormattingEnabled = true;
             this.ButtonSelect.Items.AddRange(new object[] {
             "Left",
-            "Middle",
             "Right"});
             this.ButtonSelect.Location = new System.Drawing.Point(96, 13);
             this.ButtonSelect.Name = "ButtonSelect";
